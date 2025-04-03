@@ -1,26 +1,17 @@
 import os
-import cv2
+import sys
+
+# Add StyleFlow path
+styleflow_path = os.path.abspath('external/StyleFlow')
+if styleflow_path not in sys.path:
+    sys.path.insert(0, styleflow_path)
+
+# Import StyleGRU from submodule with explicit module path
+from external.StyleFlow.StyleGRU.model import StyleGRU
+
 import numpy as np
 import torch
-import mediapipe as mp
-import librosa
-import noisereduce as nr
-import subprocess
-import pickle
-from tqdm import tqdm
-import torchvision.models as models
 from torch import nn
-import webrtcvad
-import wave
-import struct
-from collections import deque
-import torch.nn.functional as F
-
-# Import StyleGRU from the codebase
-from StyleGRU.model.StyleGRU import StyleGRU
-from StyleGRU.dataloader.triplet_clip_loader import get_diff
-
-
 
 class StyleAttention(nn.Module):
     """Style Attention module to fuse StyleGRU features with ResNet features"""

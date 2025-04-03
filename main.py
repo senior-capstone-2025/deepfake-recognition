@@ -1,3 +1,9 @@
+import numpy as np
+import torch
+from tqdm import tqdm
+from model import MultimodalDeepfakeDetector
+from preprocessor import VideoAudioProcessor
+
 def evaluate_model(model, test_loader):
     """Evaluate the deepfake detection model on test data"""
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -77,12 +83,6 @@ def merge_video_predictions(predictions, sample_to_video, video_counts):
         final_predictions[video_id] = sum(preds) / len(preds)
     
     return final_predictions
-
-def calculate_accuracy(predictions, targets):
-    """Calculate accuracy for binary classification"""
-    pred_labels = (predictions > 0.5).float()
-    correct = (pred_labels == targets).float().sum()
-    return correct / targets.size(0)
 
 
 def main():

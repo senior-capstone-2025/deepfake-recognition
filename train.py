@@ -1,3 +1,13 @@
+import torch
+from tqdm import tqdm
+from torch import nn
+
+def calculate_accuracy(predictions, targets):
+    """Calculate accuracy for binary classification"""
+    pred_labels = (predictions > 0.5).float()
+    correct = (pred_labels == targets).float().sum()
+    return correct / targets.size(0)
+
 def train_model(model, train_loader, val_loader, num_epochs=10, learning_rate=0.001):
     """Train the deepfake detection model"""
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

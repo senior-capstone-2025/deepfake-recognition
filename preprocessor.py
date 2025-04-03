@@ -13,12 +13,10 @@ from torch import nn
 import webrtcvad
 import wave
 import struct
-from collections import deque
-import torch.nn.functional as F
 
 # Import StyleGRU from the codebase
-from StyleGRU.model.StyleGRU import StyleGRU
-from StyleGRU.dataloader.triplet_clip_loader import get_diff
+from external.StyleFlow.StyleGRU.model import StyleGRU
+from external.StyleFlow.StyleGRU.dataloader.triplet_clip_loader import get_diff
 
 
 class VideoAudioProcessor:
@@ -66,7 +64,11 @@ class VideoAudioProcessor:
             self.style_gru.eval()
             if torch.cuda.is_available():
                 self.style_gru = self.style_gru.cuda()
-        
+        else:
+            self.style_gru = StyleGRU(feature_size=style_feature_size)
+            self.style_gru.eval()
+            if torch.cuda.is_available():
+                self.style_gru = self.style_gru.cuda()
         # Initialize VAD for voice activity detection
         self.vad = webrtcvad.Vad(3)  # Aggressiveness level 3 (highest)
     
