@@ -1,0 +1,11 @@
+# requirements.txt
+opencv-python
+numpy
+torch
+torchvision
+mediapipe
+librosa
+noisereduce
+webrtcvad-wheels
+tqdm
+pandas
